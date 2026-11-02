@@ -1,24 +1,81 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
+import sunwayHomeHtml from "../site-import/sunway-home.html?raw";
+import "../styles/site.css";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "SUNWAY – Electrical & Solar Systems | Hospet & Sindhanur" },
+      {
+        name: "description",
+        content:
+          "Discover solar energy solutions, electrical products and services from SUNWAY – ELECTRICAL & SOLAR SYSTEMS. Serving Hospet, Sindhanur, and neighboring regions with dependable installations and certified electrical expertise.",
+      },
+      { property: "og:title", content: "SUNWAY – Electrical & Solar Systems | Hospet & Sindhanur" },
+      {
+        property: "og:description",
+        content:
+          "Power your home with solar. Rooftop solar, solar street lights, water heaters, power backup and more from SUNWAY – Electrical & Solar Systems, Hospet & Sindhanur.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  // The imported design is one big raw HTML document. It is injected after
+  // mount so React never hydrates against it (raw HTML never re-serializes
+  // byte-for-byte), then its inline scripts are re-executed.
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!mounted || !el) return;
+
+    // The original document's <html>/<body> attributes
+    document.documentElement.classList.add("scroll-smooth");
+    document.body.classList.add("theme-solar", "font-sans", "antialiased", "text-slate-800");
+
+    // Scripts injected via innerHTML do not execute; re-create them so the
+    // design's theme / language / survey-wizard logic attaches. The scripts
+    // are IIFE-wrapped with window.* exports so remounts cannot collide.
+    for (const old of Array.from(el.querySelectorAll("script"))) {
+      const script = document.createElement("script");
+      for (const attr of Array.from(old.attributes)) script.setAttribute(attr.name, attr.value);
+      script.textContent = old.textContent;
+      old.parentNode?.replaceChild(script, old);
+    }
+
+    // Scripts registered DOMContentLoaded listeners after the event fired.
+    if (document.readyState !== "loading") {
+      document.dispatchEvent(new Event("DOMContentLoaded"));
+    }
+
+    return () => {
+      document.documentElement.classList.remove("scroll-smooth");
+      document.body.classList.remove(
+        "theme-solar",
+        "theme-light",
+        "theme-dark",
+        "font-sans",
+        "antialiased",
+        "text-slate-800",
+      );
+    };
+  }, [mounted]);
+
   return (
     <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+      ref={containerRef}
+      dangerouslySetInnerHTML={mounted ? { __html: sunwayHomeHtml } : undefined}
+    />
   );
 }

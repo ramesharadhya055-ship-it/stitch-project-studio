@@ -1,0 +1,90 @@
+/*
+ * SUNWAY homepage — captured source CSS from the imported Stitch design.
+ * Theme variables, layout utilities, and forms-plugin-equivalent base styling
+ * (the original page used the Tailwind CDN with the forms plugin).
+ */
+:root {
+  --bg-main: #f8fafc;
+  --card-bg: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --border-color: #e2e8f0;
+  --accent-color: #d97706;
+}
+.theme-solar {
+  --bg-main: #fffdf5;
+  --card-bg: #ffffff;
+  --text-main: #1c1917;
+  --text-muted: #57534e;
+  --border-color: #fde68a;
+  --accent-color: #f59e0b;
+}
+.theme-dark {
+  --bg-main: #0b1120;
+  --card-bg: #1e293b;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+  --accent-color: #fbbf24;
+}
+.theme-light {
+  --bg-main: #f8fafc;
+  --card-bg: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --border-color: #e2e8f0;
+  --accent-color: #d97706;
+}
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.glass-nav {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Forms-plugin-equivalent base styling for form controls */
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="date"],
+input[type="time"],
+input[type="number"],
+input[type="search"],
+input:not([type]),
+select,
+textarea {
+  appearance: none;
+  background-color: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--text-main);
+}
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.25em 1.25em;
+  padding-right: 2.5rem;
+}
+.dark select {
+  background-color: #1e293b;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  appearance: auto;
+  width: 1rem;
+  height: 1rem;
+  padding: 0;
+  border: none;
+  accent-color: var(--accent-color);
+}
