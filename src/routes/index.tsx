@@ -1,24 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
+import capturedCSS from "../styles/site.css?raw";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({ meta: [{ title: "Stitch - Projects" }] }),
+  staticData: { importedDocument: { html: { "dir": "ltr", "lang": "en-US" }, body: {  } } },
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <style>{capturedCSS}</style>
+      <div className="block" {...({ "ng-version": "0.0.0-PLACEHOLDER", "_nghost-ng-c2905412951": "" } as any)}>
+        <div className="block" {...({ "_nghost-ng-c1889210297": "" } as any)}>
+          <div className="bg-none [background-position:0%_0%] [background-size:auto_auto] [background-repeat:repeat] [background-origin:padding-box] [background-clip:border-box] [background-attachment:scroll] bg-site-import-background text-white flex h-svh w-screen" {...({ "_ngcontent-ng-c1889210297": "", "_nghost-ng-c4052388064": "" } as any)}>
+            <main className="h-full w-full" {...({ "_ngcontent-ng-c4052388064": "" } as any)}>
+              <div className="ac-iframe flex h-svh w-full" {...({ "_ngcontent-ng-c1889210297": "" } as any)}>
+                <img className="w-[1536px] [max-width:100%]" style={{ height: "auto" }} id="I0_1793595204319" alt="Stitch - Design with AI" src="/site-assets/46db85b063b5333f.png" data-site-import-static-fallback="video" />
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
