@@ -1,27 +1,73 @@
 import { createFileRoute } from "@tanstack/react-router";
-import capturedCSS from "../styles/site.css?raw";
+import { useEffect, useRef } from "react";
+import sunwayHomeHtml from "../site-import/sunway-home.html?raw";
+import "../styles/site.css";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: [{ title: "Stitch - Projects" }] }),
-  staticData: { importedDocument: { html: { "dir": "ltr", "lang": "en-US" }, body: {  } } },
+  head: () => ({
+    meta: [
+      { title: "SUNWAY – Electrical & Solar Systems | Hospet & Sindhanur" },
+      {
+        name: "description",
+        content:
+          "Discover solar energy solutions, electrical products and services from SUNWAY – ELECTRICAL & SOLAR SYSTEMS. Serving Hospet, Sindhanur, and neighboring regions with dependable installations and certified electrical expertise.",
+      },
+      { property: "og:title", content: "SUNWAY – Electrical & Solar Systems | Hospet & Sindhanur" },
+      {
+        property: "og:description",
+        content:
+          "Power your home with solar. Rooftop solar, solar street lights, water heaters, power backup and more from SUNWAY – Electrical & Solar Systems, Hospet & Sindhanur.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
 function Index() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    // The original document's <html>/<body> attributes
+    document.documentElement.classList.add("scroll-smooth");
+    document.body.classList.add("theme-solar", "font-sans", "antialiased", "text-slate-800");
+
+    // Scripts injected via innerHTML do not execute; re-create them so the
+    // design's theme / language / survey-wizard logic attaches. The scripts
+    // are IIFE-wrapped with window.* exports so remounts cannot collide.
+    for (const old of Array.from(el.querySelectorAll("script"))) {
+      const script = document.createElement("script");
+      for (const attr of Array.from(old.attributes)) script.setAttribute(attr.name, attr.value);
+      script.textContent = old.textContent;
+      old.parentNode?.replaceChild(script, old);
+    }
+
+    // Scripts registered DOMContentLoaded listeners after the event fired.
+    if (document.readyState !== "loading") {
+      document.dispatchEvent(new Event("DOMContentLoaded"));
+    }
+
+    return () => {
+      document.documentElement.classList.remove("scroll-smooth");
+      document.body.classList.remove(
+        "theme-solar",
+        "theme-light",
+        "theme-dark",
+        "font-sans",
+        "antialiased",
+        "text-slate-800",
+      );
+    };
+  }, []);
+
   return (
-    <>
-      <style>{capturedCSS}</style>
-      <div className="block" {...({ "ng-version": "0.0.0-PLACEHOLDER", "_nghost-ng-c2905412951": "" } as any)}>
-        <div className="block" {...({ "_nghost-ng-c1889210297": "" } as any)}>
-          <div className="bg-none [background-position:0%_0%] [background-size:auto_auto] [background-repeat:repeat] [background-origin:padding-box] [background-clip:border-box] [background-attachment:scroll] bg-site-import-background text-white flex h-svh w-screen" {...({ "_ngcontent-ng-c1889210297": "", "_nghost-ng-c4052388064": "" } as any)}>
-            <main className="h-full w-full" {...({ "_ngcontent-ng-c4052388064": "" } as any)}>
-              <div className="ac-iframe flex h-svh w-full" {...({ "_ngcontent-ng-c1889210297": "" } as any)}>
-                <img className="w-[1536px] [max-width:100%]" style={{ height: "auto" }} id="I0_1793595204319" alt="Stitch - Design with AI" src="/site-assets/46db85b063b5333f.png" data-site-import-static-fallback="video" />
-              </div>
-            </main>
-          </div>
-        </div>
-      </div>
-    </>
+    <div
+      ref={containerRef}
+      dangerouslySetInnerHTML={{ __html: sunwayHomeHtml }}
+    />
   );
 }
