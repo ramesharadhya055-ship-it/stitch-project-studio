@@ -67,6 +67,9 @@ function Index() {
   return (
     <div
       ref={containerRef}
+      // The imported design is raw source HTML; React's hydration
+      // re-serialization of it will never match byte-for-byte.
+      suppressHydrationWarning
       dangerouslySetInnerHTML={{ __html: sunwayHomeHtml }}
     />
   );
