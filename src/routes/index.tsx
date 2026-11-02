@@ -27,10 +27,18 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const containerRef = useRef<HTMLDivElement>(null);
+  // The imported design is one big raw HTML document. It is injected after
+  // mount so React never hydrates against it (raw HTML never re-serializes
+  // byte-for-byte), then its inline scripts are re-executed.
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const el = containerRef.current;
-    if (!el) return;
+    if (!mounted || !el) return;
 
     // The original document's <html>/<body> attributes
     document.documentElement.classList.add("scroll-smooth");
@@ -62,15 +70,12 @@ function Index() {
         "text-slate-800",
       );
     };
-  }, []);
+  }, [mounted]);
 
   return (
     <div
       ref={containerRef}
-      // The imported design is raw source HTML; React's hydration
-      // re-serialization of it will never match byte-for-byte.
-      suppressHydrationWarning
-      dangerouslySetInnerHTML={{ __html: sunwayHomeHtml }}
+      dangerouslySetInnerHTML={mounted ? { __html: sunwayHomeHtml } : undefined}
     />
   );
 }
