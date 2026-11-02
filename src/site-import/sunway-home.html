@@ -947,7 +947,8 @@
   
 })();</script>
 <!-- JavaScript: Trilingual Translation Handler -->
-<script data-purpose="i18n-localization">
+<script data-purpose="i18n-localization">(function(){
+
     const translations = {
       en: {
         nav_home: "Home",
@@ -1032,7 +1033,7 @@
       }
     };
 
-    function setLanguage(lang) {
+    window.setLanguage = function setLanguage(lang) {
       const texts = translations[lang] || translations.en;
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -1053,7 +1054,8 @@
         }
       });
     }
-  </script>
+  
+})();
 <!-- JavaScript: Survey Wizard, WhatsApp Dispatch & Services Form -->
 <script data-purpose="survey-wizard-logic">(function(){
 
