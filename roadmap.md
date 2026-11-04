@@ -1,8 +1,8 @@
 # Roadmap
 
 - [x] Split collage #1 into 4 photos (public/assets/backgrounds/)
-- [ ] Motion (crossfading) photo background in hero (CSS only)
-- [ ] Place photos: Services background, PM-Surya Ghar card, Site Survey banner
+- [x] Motion (crossfading) photo background in hero (CSS only)
+- [x] Place photos: Services background, PM-Surya Ghar card, Site Survey banner
 - [ ] Reusable SUNWAY watermark CSS overlay
 - [ ] Swap header/footer logo + favicon to supplied Sunway_Logo.png
 - [x] Brand logos: user-supplied logos placed in moving marquee; "N Inverters" removed
