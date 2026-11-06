@@ -9,3 +9,5 @@
 - [ ] Waiting on user: collages #2 and #3 (street light, water heater, commercial rooftop, contact banner photos)
 
 - [ ] Update existing site to ocean-blue solar theme, CSS-only ship hero using user image, image-led animated brand strip from provided logos, and accurate BESCOM information while preserving existing functions.
+
+- [ ] Inspect newly uploaded SUNWAY design brief and image references; incorporate applicable requested materials into the existing-site update.
