@@ -11,3 +11,5 @@
 - [ ] Update existing site to ocean-blue solar theme, CSS-only ship hero using user image, image-led animated brand strip from provided logos, and accurate BESCOM information while preserving existing functions.
 
 - [ ] Inspect newly uploaded SUNWAY design brief and image references; incorporate applicable requested materials into the existing-site update.
+
+- [ ] Use the two uploaded solar-ship references; remove generated false branding/UI before overlaying the original logo if approved.
